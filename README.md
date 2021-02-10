@@ -180,18 +180,18 @@ You'll have to do a kubectl exex into the pod to get these details.
 # Kubernetes Plugin Configuration
 
 - Go to Jenkins Configuration and scroll to the bottom and click on "a separate configuration page" - 
-![PIC 0](images\KubePluginConfig_0.jpg)
+![PIC 0](images/KubePluginConfig_0.jpg)
 
 - You can Kubernetes already available as it was included in Helm chart configuration. - 
-![PIC 1](images\KubePluginConfig_1.jpg)
+![PIC 1](images/KubePluginConfig_1.jpg)
 
 - Click on Kubernetes Cloud Details - 
-![PIC 2](images\KubePluginConfig_2.jpg)
+![PIC 2](images/KubePluginConfig_2.jpg)
 
   ***CLick on Test Connection***
 
 - Configure pod details - 
-![PIC 3](images\KubePluginConfig_3.jpg)
+![PIC 3](images/KubePluginConfig_3.jpg)
 
 You have two option after this - 
 
