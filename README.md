@@ -113,24 +113,23 @@ Also, Creating a pesistent volume and binding it with a claim for Jenkins ensure
 
 Navigate to jenkins folder and execute the following commands -
 
-To create namespace:
-```sh
-$ kubectl create namespace jenkins
-```
-To create service account and apply RBAC:
+>To create namespace:
+  ```sh
+  $ kubectl create namespace jenkins
+  ```
+>To create service account and apply RBAC:
 ```sh
 $ kubectl apply -f jenkins-sa.yaml
 ```
-To create namespace:
+>To create namespace:
 ```sh
 $ kubectl create namespace jenkins
 ```
-
-To create persistent volume:
+>To create persistent volume:
 ```sh
 $ kubectl apply -f jenkins-volumes.yaml
 ```
-To create a claim:
+>To create a claim:
 ```sh
 $ kubectl apply -f jenkins-pvc.yaml
 ```
@@ -159,7 +158,7 @@ $ terraform plan
 $ terraform apply
 ```
 
-> Currently ServiceType has been defined as LoadBalancer ( refer Jenkins Helm Chart). This enables a LoadBalancer with a public endpoint. This is not a good practice and your kubernetes services should be exposed only behind an NLB or ALB.
+> Currently ServiceType has been defined as LoadBalancer (refer Jenkins Helm Chart). This enables a LoadBalancer with a public endpoint. This is not a good practice and your kubernetes services should be exposed only behind an NLB or ALB.
 
 > Jenkins can be installed in your cluster by provisioning a helm resource or by using helm commands. Helm chart for the same are available under helm-jenkins.
 
@@ -179,24 +178,29 @@ You'll have to do a kubectl exex into the pod to get these details.
 
 # Kubernetes Plugin Configuration
 
-- Go to Jenkins Configuration and scroll to the bottom and click on "a separate configuration page" - 
-![PIC 0](images/KubePluginConfig_0.jpg)
+- Go to Jenkins Configuration and scroll to the bottom and click on "a separate configuration .page"
 
-- You can Kubernetes already available as it was included in Helm chart configuration. - 
-![PIC 1](images/KubePluginConfig_1.jpg)
+> ![PIC 0](images/KubePluginConfig_0.jpg)
+
+- You can see Kubernetes already available as a cloud provider
+>![PIC 1](images/KubePluginConfig_1.jpg)
 
 - Click on Kubernetes Cloud Details - 
-![PIC 2](images/KubePluginConfig_2.jpg)
+>![PIC 2](images/clouddetails.jpg)
 
   ***CLick on Test Connection***
 
 - Configure pod details - 
-![PIC 3](images/KubePluginConfig_3.jpg)
+>![PIC 3](images/KubePluginConfig_2.jpg)
+
+>![PIC 4](images/KubePluginConfig_3.jpg)
 
 You have two option after this - 
 
-1. In pod templates, you can specify what type of containers to spin. You can provide the image details and other required parameters accordingly.
-2. Or specify the containers in your pipeline script.
+1. In pod templates, you can specify the type of containers to spin. You can provide the image details and other required parameters accordingly.
+2. Specify the containers in your pipeline script.
+
+> >![PIC 5](images/containertemplate.jpg)
 
 > You can refer [here](https://github.com/jenkinsci/kubernetes-plugin#using-yaml-to-define-pod-templates) for further details.
 
