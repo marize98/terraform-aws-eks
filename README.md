@@ -17,12 +17,15 @@ All documentation is available on the [Terraform website](http://www.terraform.i
 
 # About
 
-
-This repository contains terraform files to provision an EKS cluster on AWS. It would roll out:
+Implementing a CI/CD pipeline leveraging Kubernetes gives you freedom from hasles of managing runtime environments. At times, teams within an organization used different stack for development which suit them best. And, a runtime agnostic pipeline can make the job easy for everyone. 
+This repository contains terraform files to provision an EKS cluster on AWS and facilitate a CI/CD pipeline. It would roll out:
 - An EKS Cluster 
 - A Worker Node 
-- Auto-scaling for worker node
+- Auto-scaling group for worker node
 - A VPC
+- Persistent Volume & Volume Claim
+- Jenkins
+
 
 Files: 
 
@@ -158,6 +161,7 @@ $ terraform apply
 
 > Currently ServiceType has been defined as LoadBalancer ( refer Jenkins Helm Chart). This enables a LoadBalancer with a public endpoint. This is not a good practice and your kubernetes services should be exposed only behind an NLB or ALB.
 
+> Jenkins can be installed in your cluster by provisioning a helm resource or by using helm commands. Helm chart for the same are available under helm-jenkins.
 
 # Jenkins
 
@@ -174,6 +178,27 @@ You'll have to do a kubectl exex into the pod to get these details.
 3. A Kubernetes plugin for Jenkins pipeline has been incorporated in the base image used for this setup.
 
 # Kubernetes Plugin Configuration
+
+- Go to Jenkins Configuration and scroll to the bottom and click on "a separate configuration page" - 
+![PIC 0](\images\KubePluginConfig_0.jpg)
+
+- You can Kubernetes already available as it was included in Helm chart configuration. - 
+![PIC 1](\images\KubePluginConfig_1.jpg)
+
+- Click on Kubernetes Cloud Details - 
+![PIC 2](\images\KubePluginConfig_2.jpg)
+
+  ***CLick on Test Connection***
+
+- Configure pod details - 
+![PIC 3](\images\KubePluginConfig_3.jpg)
+
+You have two option after this - 
+
+1. In pod templates, you can specify what type of containers to spin. You can provide the image details and other required parameters accordingly.
+2. Or specify the containers in your pipeline script.
+
+> You can refer [here](https://github.com/jenkinsci/kubernetes-plugin#using-yaml-to-define-pod-templates) for further details.
 
 
 # Useful Links
