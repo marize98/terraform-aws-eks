@@ -18,13 +18,13 @@ All documentation is available on the [Terraform website](http://www.terraform.i
 # About
 
 
-This repository contains terraform templates to deploy an EKS cluster on AWS. The templates would roll out:
+This repository contains terraform files to provision an EKS cluster on AWS. It would roll out:
 - An EKS Cluster 
 - A Worker Node 
 - Auto-scaling for worker node
 - A VPC
 
-Templates: 
+Files: 
 
 1.  [main.tf](./main.tf) provisions a Worker Nodes, Kubernetes & Helm providers using the AWS EKS Module.
 2.  [resources.tf](./resources.tf) provisions resources like, namespaces and role bindings.
@@ -36,6 +36,7 @@ In addition to this, the repository contains helm charts to enable CI/CD pipelin
 
 # Getting Started
 
+Following are some prerequisites:
 
 ### GIT Clone
 
@@ -92,13 +93,22 @@ $ terraform apply
 
 NOTE: Provisioning infrastructure can take some time. It might fail with a connection error. Update your kube-config file with the following command and re-run.
 
-    aws eks update-kubeconfig --name <cluster-name> --region <region>
+```sh
+$ aws eks update-kubeconfig --name <cluster-name> --region <region>
+```
+Once your infrastrucure is provisioned, you can query various details using kubectl.
 
 # Deploying Jenkins
 
-To deploy Jenkins in you cluster, you can either use helm or terraform resource. Creating a pesistent volume and binding it with a claim for Jenkins ensures that your data is not lost in case of Jenkins container crash, evict etc.
+To deploy Jenkins in you cluster, you can either use helm or terraform resourcing templates. 
 
-But before you start, create a separate namespace for Jenkins and a service account with appropriate RBAC.
+***Using Helm***
+
+Start with creating a separate namespace for Jenkins and a service account with appropriate RBAC.
+
+Also, Creating a pesistent volume and binding it with a claim for Jenkins ensures that your data is not lost in case of Jenkins container crash, evict etc.
+
+Navigate to jenkins folder and execute the following commands -
 
 To create namespace:
 ```sh
@@ -122,8 +132,6 @@ To create a claim:
 $ kubectl apply -f jenkins-pvc.yaml
 ```
 
-***Using Helm to deploy Jenkins:***
-
 ```sh
 $ chart=jenkins/jenkins
 $ helm install jenkins -n jenkins -f values.yaml ./helm $chart 
@@ -131,14 +139,42 @@ $ helm install jenkins -n jenkins -f values.yaml ./helm $chart
 
 ***Using Terraform:***
 
-Update you Terraform configuration files to provision:
+Update your Terraform configuration files to provision:
 1.  Resource for creating namespace for Jenkins
 2.  Resource for creating a Service Account
 3.  Resource for creating a persistent volume
 4.  Resource to bind the persistent volume with claim for Jenkins namespace.
 5.  Helm chart resource to provision Jenkins.
 
-TODO: Insert screenshots here.
+And execute these again:
+
+```sh
+$ terraform init
+ 
+$ terraform plan
+   
+$ terraform apply
+```
+
+> Currently ServiceType has been defined as LoadBalancer ( refer Jenkins Helm Chart). This enables a LoadBalancer with a public endpoint. This is not a good practice and your kubernetes services should be exposed only behind an NLB or ALB.
+
+
+# Jenkins
+
+Once the setup is complete:
+
+1. Using kubectl identify the public ip of the service and login. 
+
+2. Login to Jenkins using password configured or use the inital password.
+You'll have to do a kubectl exex into the pod to get these details.
+    - use kubectl port-forward do connect with the pod.
+
+3. Once logged in, configure the plugins required. 
+
+3. A Kubernetes plugin for Jenkins pipeline has been incorporated in the base image used for this setup.
+
+# Kubernetes Plugin Configuration
+
 
 # Useful Links
 
@@ -161,6 +197,7 @@ Terraform:
 
 # Open Items
 
+- Ingress configuration to be incorporated.
 - Terraform destroy terminates with unauthorized error.
     ####   Workaround:
     ```
@@ -172,3 +209,4 @@ Terraform:
       terraform state rm kubernetes_namespace.jenkins
     ```
     Specify other modules if required.
+Fix yet to be identified.
