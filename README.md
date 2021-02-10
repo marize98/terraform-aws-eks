@@ -200,7 +200,7 @@ You have two option after this -
 1. In pod templates, you can specify the type of containers to spin. You can provide the image details and other required parameters accordingly.
 2. Specify the containers in your pipeline script.
 
-> ![PIC 5](images/containertemplate.jpg)
+>![PIC 5](images/containertemplate.jpg)
 
 > You can refer [here](https://github.com/jenkinsci/kubernetes-plugin#using-yaml-to-define-pod-templates) for further details.
 
