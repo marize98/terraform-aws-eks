@@ -123,33 +123,42 @@ resource "kubernetes_cluster_role_binding" "ClusterRoleBinding" {
   }
 }
 
-/*
-resource "helm_release" "jenkins_release" {
-  name       = "default"
-  repository = "https://tuneablesloth.github.io/helm-jenkins/"
-  chart      = "jenkins"
+
+resource "helm_release" "jenkins" {
+  name       = "jenkins"
+  repository = "./terraform-aws-eks"
+  chart      = "jenkinschart"
   verify     = false
   timeout    = 30000
-  namespace  = "default"
+  namespace  = "jenkins"
+  values = [ file("./terraform-aws-eks/jenkinschart/values.yaml") ]
+
+  set {
+    name  = "cluster.enabled"
+    value = "true"
+  }
+
   set {
     name  = "service.type"
     value = "LoadBalancer"
   }
 }
-*/
+
 
 resource "kubernetes_persistent_volume" "jenkins_pv" {
   metadata {
     name = "jenkins-pv"
-  }
+    labels = {
+      name = "jenkins-pv"
+    }
+    }
   spec {
     capacity = {
       storage = "8Gi"
     }
     persistent_volume_reclaim_policy = "Retain"
     storage_class_name = "jenkins-pv"
-    mount_options = ["NFS"]
-    access_modes = ["ReadWriteMany"]
+    access_modes = ["ReadWriteOnce"]
     persistent_volume_source {
       host_path {
         path = "/data/jenkins-volume/"
@@ -157,3 +166,25 @@ resource "kubernetes_persistent_volume" "jenkins_pv" {
     }
   }
 }
+
+resource "kubernetes_persistent_volume_claim" "jenkins-claim" {
+  metadata {
+    name = "jenkins-claim"
+    namespace = "jenkins"
+  }
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    storage_class_name = "jenkins-pv"
+    resources {
+      requests = {
+        storage = "8Gi"
+      }
+    }
+    selector {
+      match_labels = {
+        "name" = "jenkins-pv"
+      }
+    }
+    volume_name = "jenkins-pv"
+  }
+}  

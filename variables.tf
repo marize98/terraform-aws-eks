@@ -12,7 +12,7 @@ variable "map_accounts" {
   type        = list(string)
 
   default = [
-    "000000000000"
+    "990646871711"
   ]
 }
 
@@ -26,13 +26,13 @@ variable "map_roles" {
 
   default = [
     {
-      rolearn  = "arn:aws:iam::<AWS Account Number>:role/<role>"
-      username = "<user-name>"
+      rolearn  = "arn:aws:iam::990646871711:role/devops-role"
+      username = "prg-bb"
       groups   = ["system:masters"]
     },
      {
-      rolearn  = "arn:aws:iam::<AWS Account Number>:role/role"
-      username = "<user-name>"
+      rolearn  = "arn:aws:iam::990646871711:role/prg-bb-devops-role"
+      username = "prg-bb-devops"
       groups   = ["system:masters"]
     }
   ]
@@ -48,13 +48,18 @@ variable "map_users" {
 
   default = [
     {
-      userarn  = "arn:aws:iam::<AWS Account Number>:user/prg-bb-devops"
-      username = "<user-name>"
+      userarn  = "arn:aws:iam::990646871711:user/prg-bb-devops"
+      username = "prg-bb-devops"
       groups   = ["system:masters"]
     },
     {
-      userarn  = "arn:aws:iam::<AWS Account Number>:user/prg-bb"
-      username = "<user-name>"
+      userarn  = "arn:aws:iam::990646871711:user/prg-bb"
+      username = "prg-bb"
+      groups   = ["system:masters"]
+    },
+    {
+      userarn  = "arn:aws:iam::990646871711:root"
+      username = "prg-bb"
       groups   = ["system:masters"]
     }
   ]

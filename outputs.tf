@@ -22,3 +22,7 @@ output "region" {
   description = "AWS region"
   value       = var.region
 }
+
+output "success" {
+  value = "module.helm_deploy.success_output"
+}
