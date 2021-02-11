@@ -26,12 +26,12 @@ variable "map_roles" {
 
   default = [
     {
-      rolearn  = "arn:aws:iam::990646871711:role/devops-role"
+      rolearn  = "arn:aws:iam::<AccountNumber>:role/<Role>"
       username = "prg-bb"
       groups   = ["system:masters"]
     },
      {
-      rolearn  = "arn:aws:iam::990646871711:role/prg-bb-devops-role"
+      rolearn  = "arn:aws:iam::<AccountNumber>:role/<Role>"
       username = "prg-bb-devops"
       groups   = ["system:masters"]
     }
@@ -48,17 +48,17 @@ variable "map_users" {
 
   default = [
     {
-      userarn  = "arn:aws:iam::990646871711:user/prg-bb-devops"
+      userarn  = "arn:aws:iam::<AccountNumber>:user/<Account-Name>"
       username = "prg-bb-devops"
       groups   = ["system:masters"]
     },
     {
-      userarn  = "arn:aws:iam::990646871711:user/prg-bb"
+      userarn  = "arn:aws:iam::<AccountNumber>:user/<Account-Name>"
       username = "prg-bb"
       groups   = ["system:masters"]
     },
     {
-      userarn  = "arn:aws:iam::990646871711:root"
+      userarn  = "arn:aws:iam::<AccountNumber>:root"
       username = "prg-bb"
       groups   = ["system:masters"]
     }
