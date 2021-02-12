@@ -126,13 +126,12 @@ resource "kubernetes_cluster_role_binding" "ClusterRoleBinding" {
 
 resource "helm_release" "jenkins" {
   name       = "jenkins"
-  repository = "./terraform-aws-eks"
-  chart      = "jenkinschart"
+  repository = "<path>/terraform-aws-eks"
+  chart      = "helm"
   verify     = false
   timeout    = 30000
   namespace  = "jenkins"
-  values = [ file("./terraform-aws-eks/jenkinschart/values.yaml") ]
-
+  values = ["${file("<path>/terraform-aws-eks/helm/values.yaml")}"]
   set {
     name  = "cluster.enabled"
     value = "true"

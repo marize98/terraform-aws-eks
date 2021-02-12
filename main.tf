@@ -38,7 +38,7 @@ module "eks" {
   # windows workaround
   wait_for_cluster_interpreter = ["C:/Program Files/Git/bin/sh.exe", "-c"]
   wait_for_cluster_cmd         = "until curl -sk $ENDPOINT >/dev/null; do sleep 4; done"
-
+  #
   map_roles                            = var.map_roles
   map_users                            = var.map_users
   map_accounts                         = var.map_accounts
