@@ -145,8 +145,7 @@ Update your Terraform configuration files to provision:
 1.  Resource for creating namespace for Jenkins
 2.  Resource for creating a Service Account
 3.  Resource for creating a persistent volume
->![PIC 5](images/jenkins-pv.JPG)
-
+>![PIC 5](images/jenkins-pv.jpg)
 4.  Resource to bind the persistent volume with claim for Jenkins namespace.
 >![PIC 6](images/pvc.JPG)
 5.  Helm chart resource to provision Jenkins.
